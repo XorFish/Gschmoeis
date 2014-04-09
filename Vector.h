@@ -8,7 +8,7 @@
 #ifndef VECTOR_H
 #define	VECTOR_H
 
-#include "SFML-2.1/include/SFML/Config.hpp"
+#include <SFML/Config.hpp>
 
 
 class Vector {
