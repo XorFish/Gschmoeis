@@ -32,8 +32,8 @@ public:
     sf::Vector2f getProjectedSize(side,rotation);
     void setProjectedSize(side,rotation, Vector);
     sf::Vector2f getProjectedPosition(side,rotation);
-    void setProjectedPosition(side,rotation, Vector);
-    sf::Vector2f getProjectedZ(side,rotation);
+    void setProjectedPosition(side, Vector);
+    sf::Vector2f getProjectedZ(side);
     void setProjectedZ(side,rotation, Vector);
     
     sf::Color getColor();

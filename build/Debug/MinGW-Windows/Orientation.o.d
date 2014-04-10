@@ -1,10 +1,8 @@
 build/Debug/MinGW-Windows/Orientation.o: Orientation.cpp Orientation.h \
- Obstacle.h Vector.h SFML-2.1/include/SFML/Config.hpp
+ Obstacle.h Vector.h
 
 Orientation.h:
 
 Obstacle.h:
 
 Vector.h:
-
-SFML-2.1/include/SFML/Config.hpp:

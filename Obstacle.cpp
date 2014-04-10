@@ -136,6 +136,57 @@ sf::Vector2f Obstacle::getProjectedPosition(side Side, rotation Rotation)
     return sf::Vector2f(result.x,result.y);
 }
 
+sf::Vector2f Obstacle::getProjectedZ(side Side) 
+{
+    sf::Vector2f Z(0,0);
+    switch(Side)
+    {
+        case front:
+            if(size.y>0)
+                Z.x=playfield.y-(position.y+size.y);
+            else
+                Z.x=playfield.y-position.y;
+            Z.y=size.y;
+            break;
+        case right:
+             if(size.x>0)
+                Z.x=playfield.x-(position.x+size.x);
+            else
+                Z.x=playfield.x-position.x;
+            Z.y=size.x;
+            break;
+        case top:
+             if(size.z<0)
+                Z.x=position.z+size.z;
+            else
+                Z.x=position.z;
+            Z.y=size.z;
+            break;
+        case back:
+            if(size.y<0)
+                Z.x=position.y+size.y;
+            else
+                Z.x=position.y;
+            Z.y=size.y;
+            break;
+        case left:
+            if(size.x<0)
+                Z.x=position.x+size.x;
+            else
+                Z.x=position.x;
+            Z.y=size.x;
+            break;
+        case bottom:
+            if(size.z>0)
+                Z.x=playfield.z-(position.z+size.z);
+            else
+                Z.x=playfield.z-position.z;
+            Z.y=size.z;
+            break;
+            
+    }
+    
+}
 /*Obstacle::~Obstacle() 
 {
 }

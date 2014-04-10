@@ -1,8 +1,5 @@
-build/Debug/MinGW-Windows/Obstacle.o: Obstacle.cpp Obstacle.h Vector.h \
- SFML-2.1/include/SFML/Config.hpp
+build/Debug/MinGW-Windows/Obstacle.o: Obstacle.cpp Obstacle.h Vector.h
 
 Obstacle.h:
 
 Vector.h:
-
-SFML-2.1/include/SFML/Config.hpp:
