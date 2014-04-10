@@ -73,7 +73,7 @@ int main()
     RenderWindow window(sf::VideoMode(1000, 1000), "SFML works!", sf::Style::Default, settings);
     sf::Clock c;
     c.restart();
-    
+    Vector v(0,0);
     while (window.isOpen())
     {
         Event event;
@@ -83,43 +83,39 @@ int main()
             {
                 if(sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
                 {
-                    
+                    v.setVector(test1.getProjectedPosition(rotate.getSide(),rotate.getRotation()).x,test1.getProjectedPosition(rotate.getSide(),rotate.getRotation()).y+5);
+                    test1.setProjectedPosition(rotate.getSide(),rotate.getRotation(), v);
                 }
                 if(sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
                 {
-                    
+                    v.setVector(test1.getProjectedPosition(rotate.getSide(),rotate.getRotation()).x+5,test1.getProjectedPosition(rotate.getSide(),rotate.getRotation()).y);
+                    test1.setProjectedPosition(rotate.getSide(),rotate.getRotation(), v);
                 }
                 if(sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
                 {
-                   
+                   v.setVector(test1.getProjectedPosition(rotate.getSide(),rotate.getRotation()).x-5,test1.getProjectedPosition(rotate.getSide(),rotate.getRotation()).y);
+                   test1.setProjectedPosition(rotate.getSide(),rotate.getRotation(), v);
                 }
                 if(sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
                 {
-                  
+                    v.setVector(test1.getProjectedPosition(rotate.getSide(),rotate.getRotation()).x,test1.getProjectedPosition(rotate.getSide(),rotate.getRotation()).y-5);
+                    test1.setProjectedPosition(rotate.getSide(),rotate.getRotation(),v );
                 }
                 if(sf::Keyboard::isKeyPressed(sf::Keyboard::A))
                 {
-                    rotate.Rotate(Orientation::left);
-                    rec.setPosition(test1.getProjectedPosition(rotate.getSide(),rotate.getRotation()));
-                    rec.setSize(test1.getProjectedSize(rotate.getSide(),rotate.getRotation()));
+                    rotate.Rotate(Orientation::left);                   
                 }
                 if(sf::Keyboard::isKeyPressed(sf::Keyboard::S))
                 {
-                    rotate.Rotate(Orientation::down);
-                    rec.setPosition(test1.getProjectedPosition(rotate.getSide(),rotate.getRotation()));
-                    rec.setSize(test1.getProjectedSize(rotate.getSide(),rotate.getRotation()));
+                    rotate.Rotate(Orientation::down);                   
                 }
                 if(sf::Keyboard::isKeyPressed(sf::Keyboard::D))
                 {
-                    rotate.Rotate(Orientation::right);
-                    rec.setPosition(test1.getProjectedPosition(rotate.getSide(),rotate.getRotation()));
-                    rec.setSize(test1.getProjectedSize(rotate.getSide(),rotate.getRotation()));
+                    rotate.Rotate(Orientation::right);                   
                 }
                 if(sf::Keyboard::isKeyPressed(sf::Keyboard::W))
                 {
                     rotate.Rotate(Orientation::up);
-                    rec.setPosition(test1.getProjectedPosition(rotate.getSide(),rotate.getRotation()));
-                    rec.setSize(test1.getProjectedSize(rotate.getSide(),rotate.getRotation()));
                 }
             }
             if (event.type == Event::Closed)
@@ -128,6 +124,8 @@ int main()
         if(c.getElapsedTime()>sf::milliseconds(5))
         {
             c.restart();
+            rec.setPosition(test1.getProjectedPosition(rotate.getSide(),rotate.getRotation()));
+            rec.setSize(test1.getProjectedSize(rotate.getSide(),rotate.getRotation()));
             window.clear(sf::Color::Black);
             window.draw(rec);
             window.display();

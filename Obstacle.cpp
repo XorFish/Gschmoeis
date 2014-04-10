@@ -78,6 +78,43 @@ sf::Vector2f Obstacle::getProjectedSize(side Direction, rotation Rotation)
     }
     return sf::Vector2f(result.x,result.y);
 }
+void Obstacle::setProjectedSize(side Direction, rotation Rotation,Vector newSize)
+{
+    switch(Rotation)
+    {
+        case r270:
+            newSize.setVector(newSize.y,-newSize.x);
+            break;
+        case r90:
+            newSize.setVector(-newSize.y,newSize.x);
+            break;
+        case r180:
+            newSize.setVector(-newSize.x,-newSize.y);
+            break;
+    }
+    switch(Direction)
+    {
+        case front:
+                size.setVector(newSize.x,size.y, -newSize.y);
+                break;
+        case right:
+                size.setVector(size.x, -newSize.x, -newSize.y);
+                break;
+        case top:
+                size.setVector(newSize.x, newSize.y, size.z);
+                break;
+        case back:
+                size.setVector(-newSize.x,size.y, -newSize.y);
+                break;
+        case left:
+                size.setVector(size.x, newSize.x, -newSize.y);
+                break;
+        case bottom:
+                 size.setVector(newSize.x, -newSize.y, size.z);
+                break;
+    }
+    
+}
 sf::Vector2f Obstacle::getProjectedPosition(side Side, rotation Rotation)
 {
     /**
@@ -135,7 +172,70 @@ sf::Vector2f Obstacle::getProjectedPosition(side Side, rotation Rotation)
     }
     return sf::Vector2f(result.x,result.y);
 }
-
+void Obstacle::setProjectedPosition(side Side, rotation Rotation,Vector newPosition)
+{
+float h,w;
+    switch(Side)
+    {
+        case front:
+                h=playfield.z;
+                w=playfield.x;
+                break;
+        case right:
+                h=playfield.z;
+                w=playfield.y;
+                break;
+        case top:
+                h=playfield.y;
+                w=playfield.x;
+                break;
+        case back:
+                h=playfield.z;
+                w=playfield.x;
+                break;
+        case left:
+                h=playfield.z;
+                w=playfield.y;
+                break;
+        case bottom:
+                h=playfield.y;
+                w=playfield.x;
+                break;
+    }
+    switch(Rotation)
+    {
+        case r270:
+            newPosition.setVector(newPosition.y,w-newPosition.x);
+            break;
+        case r90:
+            newPosition.setVector(h-newPosition.y,newPosition.x);
+            break;
+        case r180:
+            newPosition.setVector(w-newPosition.x,h-newPosition.y);
+            break;
+    }
+     switch(Side)
+    {
+        case front:
+                position.setVector(newPosition.x,position.y, playfield.z-newPosition.y);
+                break;
+        case right:
+                position.setVector(position.x, playfield.y-newPosition.x, playfield.z-newPosition.y);
+                break;
+        case top:
+                position.setVector(newPosition.x, newPosition.y, position.z);
+                break;
+        case back:
+                position.setVector(playfield.x-newPosition.x,position.y, playfield.z-newPosition.y);
+                break;
+        case left:
+                position.setVector(position.x, newPosition.x, playfield.z-newPosition.y);
+                break;
+        case bottom:
+                 position.setVector(newPosition.x, playfield.y-newPosition.y, position.z);
+                break;
+    }
+}
 sf::Vector2f Obstacle::getProjectedZ(side Side) 
 {
     sf::Vector2f Z(0,0);
