@@ -19,21 +19,21 @@ public:
     float x;
     float y;
     float z;
-    float w;
+    //float w;
     dimension Dimension;
     
-    static const Vector NullvectorD0;
-    static const Vector NullvectorD2;
-    static const Vector NullvectorD3;
-    static const Vector NullvectorD4;
+    //static const Vector NullvectorD0;
+    //static const Vector NullvectorD2;
+    //static const Vector NullvectorD3;
+    //static const Vector NullvectorD4;
     
     //Konstructor für Dim2-4
-    Vector(float, float, float, float);
+    //Vector(float, float, float, float);
     Vector(float, float, float);
     Vector(float, float);
     Vector();
     
-    void setVector(float, float, float,float);
+    //void setVector(float, float, float,float);
     void setVector(float, float, float);
     void setVector(float, float);
     void setVector(void);

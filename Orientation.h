@@ -7,27 +7,34 @@
 
 #ifndef ORIENTATION_H
 #define	ORIENTATION_H
-#include "Obstacle.h"
 class Orientation {
 public:
-    enum Direction{up=0, down=1, right=2, left=3};
+    enum side {
+        front = 0, back = 1, right = 2, left = 3, top = 4, bottom = 5
+    };
+
+    enum rotation {
+        r0 = 0, r90 = 1, r180 = 2, r270 = 3
+    };
+    enum Direction{Up=0, Down=1, Right=2, Left=3};
     Orientation();
-    Orientation(Obstacle::side, Obstacle::rotation);
-    void setOrientation(Obstacle::side, Obstacle::rotation);
+    Orientation(side, rotation);
+    void setOrientation(side, rotation);
     
-    Obstacle::side getSide();
-    Obstacle::rotation getRotation();
-    void setSide(Obstacle::side);
-    void setRotation(Obstacle::rotation);
+    side getSide();
+    rotation getRotation();
+    void setSide(side);
+    void setRotation(rotation);
     
-    static Orientation Rotate(Obstacle::side, Obstacle::rotation, Direction);
+    static Orientation Rotate(side, rotation, Direction);
+    static Orientation Rotate(Orientation, Direction);
     void Rotate(Direction);
     //Orientation(const Orientation& orig);
     //virtual ~Orientation();
 private:
     Direction direction;
-    Obstacle::side side;
-    Obstacle::rotation rotation;
+    side side_p;
+    rotation rotation_p;
 
 };
 

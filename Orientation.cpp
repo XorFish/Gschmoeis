@@ -9,133 +9,134 @@
 
 Orientation::Orientation() 
 {
-    setOrientation(Obstacle::front, Obstacle::r0);
+    setOrientation(Orientation::front, Orientation::r0);
 }
-Orientation::Orientation(Obstacle::side Side,Obstacle::rotation Rotation) 
+Orientation::Orientation(Orientation::side Side,Orientation::rotation Rotation) 
 {
     setOrientation(Side, Rotation);
 }
-Obstacle::side Orientation::getSide()
+Orientation::side Orientation::getSide()
 {
-    return side;
+    return side_p;
 }
-Obstacle::rotation Orientation::getRotation()
+Orientation::rotation Orientation::getRotation()
 {
-    return rotation;
+    return rotation_p;
 }
-void Orientation::setSide(Obstacle::side Side)
+void Orientation::setSide(Orientation::side Side)
 {
-    side=Side;
+    side_p=Side;
 }
-void Orientation::setRotation(Obstacle::rotation Rotation)
+void Orientation::setRotation(Orientation::rotation Rotation)
 {
-    rotation=Rotation;
+    rotation_p=Rotation;
 }
-void Orientation::setOrientation(Obstacle::side Side,Obstacle::rotation Rotation)
+void Orientation::setOrientation(Orientation::side Side,Orientation::rotation Rotation)
 {
-        side=Side;
-        rotation=Rotation;
+        side_p=Side;
+        rotation_p=Rotation;
 }
+
 void Orientation::Rotate(Direction d) 
 {
-    Obstacle::rotation rUp,rLeft,rRight,rDown,rTemp;
-    Obstacle::side sUp,sLeft, sRight, sDown,sTemp;
+    Orientation::rotation rUp,rLeft,rRight,rDown,rTemp;
+    Orientation::side sUp,sLeft, sRight, sDown,sTemp;
 
-        switch(side)
+        switch(side_p)
         {
-            case Obstacle::front:
+            case Orientation::front:
                 
-                sUp=Obstacle::top;
-                rUp=Obstacle::r0;
+                sUp=Orientation::top;
+                rUp=Orientation::r0;
                 
-                sLeft=Obstacle::left;
-                rLeft=Obstacle::r0;
+                sLeft=Orientation::left;
+                rLeft=Orientation::r0;
                 
-                sRight=Obstacle::right;
-                rRight=Obstacle::r0;
+                sRight=Orientation::right;
+                rRight=Orientation::r0;
                 
-                sDown=Obstacle::bottom;
-                rDown=Obstacle::r0;
+                sDown=Orientation::bottom;
+                rDown=Orientation::r0;
                 break;
                 
-            case Obstacle::left:
+            case Orientation::left:
                 
-                sUp=Obstacle::top;
-                rUp=Obstacle::r90;
+                sUp=Orientation::top;
+                rUp=Orientation::r90;
                 
-                sLeft=Obstacle::back;
-                rLeft=Obstacle::r0;
+                sLeft=Orientation::back;
+                rLeft=Orientation::r0;
                 
-                sRight=Obstacle::front;
-                rRight=Obstacle::r0;
+                sRight=Orientation::front;
+                rRight=Orientation::r0;
                 
-                sDown=Obstacle::bottom;
-                rDown=Obstacle::r270;
+                sDown=Orientation::bottom;
+                rDown=Orientation::r270;
                 break;
                 
-            case Obstacle::right:
+            case Orientation::right:
                 
-                sUp=Obstacle::top;
-                rUp=Obstacle::r270;
+                sUp=Orientation::top;
+                rUp=Orientation::r270;
                 
-                sLeft=Obstacle::front;
-                rLeft=Obstacle::r0;
+                sLeft=Orientation::front;
+                rLeft=Orientation::r0;
                 
-                sRight=Obstacle::back;
-                rRight=Obstacle::r0;
+                sRight=Orientation::back;
+                rRight=Orientation::r0;
                 
-                sDown=Obstacle::bottom;
-                rDown=Obstacle::r90;
+                sDown=Orientation::bottom;
+                rDown=Orientation::r90;
                 break;
                 
-            case Obstacle::back:
+            case Orientation::back:
                  
-                sUp=Obstacle::top;
-                rUp=Obstacle::r180;
+                sUp=Orientation::top;
+                rUp=Orientation::r180;
                 
-                sLeft=Obstacle::right;
-                rLeft=Obstacle::r0;
+                sLeft=Orientation::right;
+                rLeft=Orientation::r0;
                 
-                sRight=Obstacle::left;
-                rRight=Obstacle::r0;
+                sRight=Orientation::left;
+                rRight=Orientation::r0;
                 
-                sDown=Obstacle::bottom;
-                rDown=Obstacle::r180;
+                sDown=Orientation::bottom;
+                rDown=Orientation::r180;
                 break;
                 
-            case Obstacle::top: 
+            case Orientation::top: 
                  
-                sUp=Obstacle::back;
-                rUp=Obstacle::r180;
+                sUp=Orientation::back;
+                rUp=Orientation::r180;
                 
-                sLeft=Obstacle::left;
-                rLeft=Obstacle::r270;
+                sLeft=Orientation::left;
+                rLeft=Orientation::r270;
                 
-                sRight=Obstacle::right;
-                rRight=Obstacle::r90;
+                sRight=Orientation::right;
+                rRight=Orientation::r90;
                 
-                sDown=Obstacle::front;
-                rDown=Obstacle::r0;
+                sDown=Orientation::front;
+                rDown=Orientation::r0;
                 break;
                 
-            case Obstacle::bottom:
+            case Orientation::bottom:
                  
-                sUp=Obstacle::front;
-                rUp=Obstacle::r0;
+                sUp=Orientation::front;
+                rUp=Orientation::r0;
                 
-                sLeft=Obstacle::left;
-                rLeft=Obstacle::r90;
+                sLeft=Orientation::left;
+                rLeft=Orientation::r90;
                 
-                sRight=Obstacle::right;
-                rRight=Obstacle::r270;
+                sRight=Orientation::right;
+                rRight=Orientation::r270;
                 
-                sDown=Obstacle::back;
-                rDown=Obstacle::r180;
+                sDown=Orientation::back;
+                rDown=Orientation::r180;
                 break;
         }
-        switch (rotation)
+        switch (rotation_p)
         {
-            case Obstacle::r90:
+            case Orientation::r90:
                 sTemp=sUp;
                 sUp=sRight;
                 sRight=sDown;
@@ -143,12 +144,12 @@ void Orientation::Rotate(Direction d)
                 sLeft=sTemp;
                 
                 rTemp=rUp;
-                rUp=(Obstacle::rotation)((rRight+(int)Obstacle::r90)%4);
-                rRight=(Obstacle::rotation)((rDown+(int)Obstacle::r90)%4);
-                rDown=(Obstacle::rotation)((rLeft+(int)Obstacle::r90)%4);
-                rLeft=(Obstacle::rotation)((rTemp+(int)Obstacle::r90)%4);
+                rUp=(Orientation::rotation)((rRight+(int)Orientation::r90)%4);
+                rRight=(Orientation::rotation)((rDown+(int)Orientation::r90)%4);
+                rDown=(Orientation::rotation)((rLeft+(int)Orientation::r90)%4);
+                rLeft=(Orientation::rotation)((rTemp+(int)Orientation::r90)%4);
                 break;
-            case Obstacle::r180:
+            case Orientation::r180:
                 sTemp=sUp;
                 sUp=sDown;
                 sDown=sTemp;
@@ -158,13 +159,13 @@ void Orientation::Rotate(Direction d)
                 sLeft=sTemp;
                 
                 rTemp=rUp;
-                rUp=(Obstacle::rotation)((rDown+(int)Obstacle::r180)%4);
-                rDown=(Obstacle::rotation)((rTemp+(int)Obstacle::r180)%4);
+                rUp=(Orientation::rotation)((rDown+(int)Orientation::r180)%4);
+                rDown=(Orientation::rotation)((rTemp+(int)Orientation::r180)%4);
                 rTemp=rRight;
-                rRight=(Obstacle::rotation)((rLeft+(int)Obstacle::r180)%4);
-                rLeft=(Obstacle::rotation)((rTemp+(int)Obstacle::r180)%4);
+                rRight=(Orientation::rotation)((rLeft+(int)Orientation::r180)%4);
+                rLeft=(Orientation::rotation)((rTemp+(int)Orientation::r180)%4);
                 break;
-            case Obstacle::r270:
+            case Orientation::r270:
                 sTemp=sUp;
                 sUp=sLeft;
                 sLeft=sDown;
@@ -172,34 +173,44 @@ void Orientation::Rotate(Direction d)
                 sRight=sTemp;
                 
                 rTemp=rUp;
-                rUp=(Obstacle::rotation)((rLeft+(int)Obstacle::r270)%4);
-                rLeft=(Obstacle::rotation)((rDown+(int)Obstacle::r270)%4);
-                rDown=(Obstacle::rotation)((rRight+(int)Obstacle::r270)%4);
-                rRight=(Obstacle::rotation)((rTemp+(int)Obstacle::r270)%4);
+                rUp=(Orientation::rotation)((rLeft+(int)Orientation::r270)%4);
+                rLeft=(Orientation::rotation)((rDown+(int)Orientation::r270)%4);
+                rDown=(Orientation::rotation)((rRight+(int)Orientation::r270)%4);
+                rRight=(Orientation::rotation)((rTemp+(int)Orientation::r270)%4);
                 break;
         }
         switch (d)
         {
-            case up:
-                side=sUp;
-                rotation=rUp;
+            case Up:
+                side_p=sUp;
+                rotation_p=rUp;
                 break;
-            case down:
-                side=sDown;
-                rotation=rDown;
+            case Down:
+                side_p=sDown;
+                rotation_p=rDown;
                 break;
-            case right:
-                side=sRight;
-                rotation=rRight;
+            case Right:
+                side_p=sRight;
+                rotation_p=rRight;
                 break;
-            case left:
-                side=sLeft;
-                rotation=rLeft;
+            case Left:
+                side_p=sLeft;
+                rotation_p=rLeft;
                 break;
         }
         
 }
-
+Orientation Orientation::Rotate(side s, rotation r, Direction d)
+{
+    Orientation temp(s,r);
+    temp.Rotate(d);
+    return temp;  
+}
+Orientation Orientation::Rotate(Orientation o, Direction d)
+{
+    o.Rotate(d);
+    return o; 
+}
 /*Orientation::Orientation(const Orientation& orig) {
 }
 

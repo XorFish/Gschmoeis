@@ -37,6 +37,9 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 OBJECTFILES= \
 	${OBJECTDIR}/Obstacle.o \
 	${OBJECTDIR}/Orientation.o \
+	${OBJECTDIR}/Player.o \
+	${OBJECTDIR}/PlayerHandler.o \
+	${OBJECTDIR}/Three_Points.o \
 	${OBJECTDIR}/Vector.o \
 	${OBJECTDIR}/main.o
 
@@ -74,6 +77,21 @@ ${OBJECTDIR}/Orientation.o: Orientation.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Orientation.o Orientation.cpp
+
+${OBJECTDIR}/Player.o: Player.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Player.o Player.cpp
+
+${OBJECTDIR}/PlayerHandler.o: PlayerHandler.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/PlayerHandler.o PlayerHandler.cpp
+
+${OBJECTDIR}/Three_Points.o: Three_Points.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Three_Points.o Three_Points.cpp
 
 ${OBJECTDIR}/Vector.o: Vector.cpp 
 	${MKDIR} -p ${OBJECTDIR}

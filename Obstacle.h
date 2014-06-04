@@ -8,34 +8,51 @@
 #ifndef OBSTACLE_H
 #define	OBSTACLE_H
 #include "Vector.h"
+#include "Orientation.h"
 #include <SFML/Graphics.hpp>
 
 class Obstacle {
 private:
-    
+
     Vector position;
     Vector size;
     Vector playfield;
     sf::Color color;
-    
+
 public:
-    enum side{front=0, back=1, right=2, left=3, top=4, bottom=5};
-    enum rotation{r0=0, r90=1, r180=2, r270=3};
-    Obstacle(Vector,Vector, sf::Color, Vector);
-    //virtual ~Obstacle();
+
     
+    Obstacle(Vector, Vector, sf::Color, Vector);
+    Obstacle();
+    //virtual ~Obstacle();
+
     Vector getSize();
     void setSize(Vector);
     Vector getPosition();
     void setPosition(Vector);
+
+    sf::Vector2f getProjectedSize(Orientation::side, Orientation::rotation);
+    sf::Vector2f getProjectedSize(Orientation);
     
-    sf::Vector2f getProjectedSize(side,rotation);
-    void setProjectedSize(side,rotation, Vector);
-    sf::Vector2f getProjectedPosition(side,rotation);
-    void setProjectedPosition(side,rotation, Vector);
-    sf::Vector2f getProjectedZ(side);
-    void setProjectedZ(side, Vector);
+    void setProjectedSize(Orientation::side, Orientation::rotation, Vector);
+    void setProjectedSize(Orientation, Vector);
+    void ExpandProjectedSize(Orientation::side, Orientation::rotation, Vector);
+    void ExpandProjectedSize(Orientation, Vector);
     
+    sf::Vector2f getProjectedPosition(Orientation::side, Orientation::rotation);
+    sf::Vector2f getProjectedPosition(Orientation);
+    
+    void setProjectedPosition(Orientation::side, Orientation::rotation, Vector);
+    void setProjectedPosition(Orientation, Vector);
+    void ExpandProjectedPosition(Orientation::side, Orientation::rotation, Vector);
+    void ExpandProjectedPosition(Orientation, Vector);
+    
+    sf::Vector2f getProjectedZ(Orientation::side);
+    void setProjectedZ(Orientation::side, Vector);
+    
+    Vector getPlayfield(void);
+    void   setPlayfield(Vector);
+
     sf::Color getColor();
     void setColor(sf::Color);
 };

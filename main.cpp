@@ -1,42 +1,46 @@
 #include <SFML/Graphics.hpp>
+#include <SFML/System.hpp>
+#include <SFML/Window.hpp>
 using namespace sf;
 #include "Vector.h"
 #include "Obstacle.h"
 #include "Orientation.h"
+#include "Player.h"
+#include "PlayerHandler.h"
 #include <iostream>
+#include <vector>
 
 using namespace std;
-class FallingRectangle: public sf::RectangleShape{
-    Vector2f speed;
-    Vector2f acceleration;
-    public:
-    void setSpeed(Vector2f);
-    Vector2f getSpeed(void);
-    void setAcceleration(Vector2f);
-    Vector2f getAcceleration(void);
-    FallingRectangle(Vector2f,Vector2f,Vector2f,Vector2f,Color);
-    bool Tick(int, int);
-    void Tick(void);
-};
-void     FallingRectangle::setSpeed(Vector2f Speed)                     {speed=Speed;}
-Vector2f FallingRectangle::getSpeed(void)                               {return speed;}
-void     FallingRectangle::setAcceleration(Vector2f Acceleration)       {acceleration=Acceleration;}
-Vector2f FallingRectangle::getAcceleration(void)                        {return acceleration;}
-FallingRectangle::FallingRectangle(Vector2f Speed,Vector2f Acceleration,Vector2f Size,Vector2f Position,Color c)
+void DRAW(PlayerHandler* Handler, Orientation O,float Scale, sf::Vector2f Position, sf::RenderWindow* target)
 {
-    speed=Speed;
-    acceleration=Acceleration;
-    setSize(Size);
-    setPosition(Position);
-    setFillColor(c);
+    sf::RectangleShape rec(Position);
+    rec.setFillColor(Handler->Player1.getColor());
+            for(int ind=Handler->getSortedvector(O).size()-1;ind>=0;ind--)
+            {
+               rec.setPosition(Handler->getSortedvector(O).at(ind).getProjectedPosition(O));
+               rec.setSize(Handler->getSortedvector(O).at(ind).getProjectedSize(O));
+               rec.setScale(Scale,Scale);
+               rec.setPosition(rec.getPosition().x*Scale, rec.getPosition().y*Scale);
+               rec.move(Position);
+               target->draw(rec);
+            }
+           rec.setPosition(Handler->Player1.getProjectedPosition(O));
+           rec.setSize(Handler->Player1.getProjectedSize(O));
+           rec.setScale(Scale,Scale);
+           rec.setPosition(rec.getPosition().x*Scale, rec.getPosition().y*Scale);
+           rec.move(Position);
+           target->draw(rec);
+           
+           rec.setOrigin(20,20);
+           rec.setSize(sf::Vector2f(40,40));
+           rec.setFillColor(sf::Color::Blue);
+           rec.setPosition(Handler->getCentre(Handler->Player1,O));
+           rec.setScale(Scale,Scale);
+           rec.setPosition(rec.getPosition().x*Scale, rec.getPosition().y*Scale);
+           rec.move(Position);
+           target->draw(rec);
+           
 }
-bool FallingRectangle::Tick(int x, int y)
-{
-    return RectangleShape::getGlobalBounds().contains(x,y);
-    move(speed+=acceleration);
-}
-void FallingRectangle::Tick(void) {move(speed+=acceleration);}
-
 int main()
 {
     
@@ -55,25 +59,46 @@ int main()
     //FallingRectangle test(Vector2f(1,0),Vector2f(0,0.01),Vector2f(100,33),Vector2f(250,-33),sf::Color::Red);
     
   
-    Vector Size(100,200,20);
+    Vector Size(20,20,20);
     Vector Position(200,250,50);
     Vector Playfield(1000,1000,1000);
-    Obstacle test1(Size,Position, sf::Color::Red,Playfield);
+    Orientation rotate(Orientation::front,Orientation::r0);
+    Vector2f Offset(200,0);
+    PlayerHandler handler;
+    Player test(Size,Position, sf::Color::Green, Playfield, Orientation::Right, rotate);
+    handler.Player1=test;
+    
 
     
-    Orientation rotate(Obstacle::front,Obstacle::r0);
-    sf::RectangleShape rec(test1.getProjectedSize(rotate.getSide(),rotate.getRotation()));
+    
+    sf::RectangleShape rec(handler.Player1.getProjectedSize(rotate.getSide(),rotate.getRotation()));
+    sf::RectangleShape position(handler.Player1.getProjectedSize(rotate.getSide(),rotate.getRotation()));
+    sf::RectangleShape collision1(handler.Player1.getProjectedSize(rotate.getSide(),rotate.getRotation()));
+    sf::RectangleShape collision2(handler.Player1.getProjectedSize(rotate.getSide(),rotate.getRotation()));
+    sf::RectangleShape collision3(handler.Player1.getProjectedSize(rotate.getSide(),rotate.getRotation()));
    
-    rec.setPosition(test1.getProjectedPosition(rotate.getSide(),rotate.getRotation()));
-    rec.setSize(test1.getProjectedSize(rotate.getSide(),rotate.getRotation()));
+    rec.setPosition(handler.Player1.getProjectedPosition(rotate.getSide(),rotate.getRotation()));
+    rec.setSize(handler.Player1.getProjectedSize(rotate.getSide(),rotate.getRotation()));
     rec.setFillColor(Color::Green);
+    rec.setOutlineThickness(2);
+    rec.setOutlineColor(sf::Color::Red);
+    position=rec;
+    position.setSize(sf::Vector2f(40,40));
+    position.setOrigin(20,20);
+    position.setFillColor(sf::Color::Blue);
+    collision1=collision2=collision3=position;
+    collision1.setScale(0.2,0.2);
+    collision2.setScale(0.2,0.2);
+    collision3.setScale(0.2,0.2);
+    
     ContextSettings settings;
         settings.antialiasingLevel = 8;
         
-    RenderWindow window(sf::VideoMode(1000, 1000), "SFML works!", sf::Style::Default, settings);
+    RenderWindow window(sf::VideoMode(1400, 1000), "SFML works!", sf::Style::Default, settings);
     sf::Clock c;
     c.restart();
-    Vector v(0,0);
+    
+    
     while (window.isOpen())
     {
         Event event;
@@ -83,51 +108,96 @@ int main()
             {
                 if(sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
                 {
-                    v.setVector(test1.getProjectedPosition(rotate.getSide(),rotate.getRotation()).x,test1.getProjectedPosition(rotate.getSide(),rotate.getRotation()).y+5);
-                    test1.setProjectedPosition(rotate.getSide(),rotate.getRotation(), v);
+                   //test1.Blocks.push_back(test1.Turn(Orientation::Down));
                 }
                 if(sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
                 {
-                    v.setVector(test1.getProjectedPosition(rotate.getSide(),rotate.getRotation()).x+5,test1.getProjectedPosition(rotate.getSide(),rotate.getRotation()).y);
-                    test1.setProjectedPosition(rotate.getSide(),rotate.getRotation(), v);
+                   switch(handler.Player1.getDirection())
+                    {
+                        case Orientation::Down:
+                            
+                            handler.AddObstacle(handler.Player1.Turn(Orientation::Left));
+                            break;
+                        case Orientation::Up:
+                            handler.AddObstacle(handler.Player1.Turn(Orientation::Right));
+                            break;
+                        case Orientation::Right:
+                            handler.AddObstacle(handler.Player1.Turn(Orientation::Down));
+                            break;
+                        case Orientation::Left:
+                            handler.AddObstacle(handler.Player1.Turn(Orientation::Up));
+                            break;
+                    }
                 }
                 if(sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
                 {
-                   v.setVector(test1.getProjectedPosition(rotate.getSide(),rotate.getRotation()).x-5,test1.getProjectedPosition(rotate.getSide(),rotate.getRotation()).y);
-                   test1.setProjectedPosition(rotate.getSide(),rotate.getRotation(), v);
+                    switch(handler.Player1.getDirection())
+                    {
+                        case Orientation::Down:
+                            handler.AddObstacle(handler.Player1.Turn(Orientation::Right));
+                            break;
+                        case Orientation::Up:
+                            handler.AddObstacle(handler.Player1.Turn(Orientation::Left));
+                            break;
+                        case Orientation::Right:
+                            handler.AddObstacle(handler.Player1.Turn(Orientation::Up));
+                            break;
+                        case Orientation::Left:
+                            handler.AddObstacle(handler.Player1.Turn(Orientation::Down));
+                            break;
+                    }
                 }
                 if(sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
                 {
-                    v.setVector(test1.getProjectedPosition(rotate.getSide(),rotate.getRotation()).x,test1.getProjectedPosition(rotate.getSide(),rotate.getRotation()).y-5);
-                    test1.setProjectedPosition(rotate.getSide(),rotate.getRotation(),v );
+                    //test1.Blocks.push_back(test1.Turn(Orientation::Up));
                 }
                 if(sf::Keyboard::isKeyPressed(sf::Keyboard::A))
                 {
-                    rotate.Rotate(Orientation::left);                   
+                    handler.AddObstacle(handler.Player1.Rotate(Orientation::Left));              
                 }
                 if(sf::Keyboard::isKeyPressed(sf::Keyboard::S))
                 {
-                    rotate.Rotate(Orientation::down);                   
+                    handler.AddObstacle(handler.Player1.Rotate(Orientation::Down));                   
                 }
                 if(sf::Keyboard::isKeyPressed(sf::Keyboard::D))
                 {
-                    rotate.Rotate(Orientation::right);                   
+                    handler.AddObstacle(handler.Player1.Rotate(Orientation::Right));                   
                 }
                 if(sf::Keyboard::isKeyPressed(sf::Keyboard::W))
                 {
-                    rotate.Rotate(Orientation::up);
+                    handler.AddObstacle(handler.Player1.Rotate(Orientation::Up));
+                }
+                if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+                {
+                    handler.Player1.Blocks.clear();
                 }
             }
             if (event.type == Event::Closed)
                 window.close();
         }
-        if(c.getElapsedTime()>sf::milliseconds(5))
+        if(c.getElapsedTime()>sf::milliseconds(20))
         {
             c.restart();
-            rec.setPosition(test1.getProjectedPosition(rotate.getSide(),rotate.getRotation()));
-            rec.setSize(test1.getProjectedSize(rotate.getSide(),rotate.getRotation()));
-            window.clear(sf::Color::Black);
-            window.draw(rec);
+            handler.Player1.move();
+            handler.Player1.move();
+            handler.Player1.move();
+            handler.Player1.move();
+            if(handler.Collison(handler.Player1,handler.getSortedvector(handler.Player1.getOrientation()),handler.Player1.getOrientation()))
+                window.clear(sf::Color::Red);
+            else
+                window.clear(sf::Color::White);
+            DRAW(&handler,handler.Player1.getOrientation(),1,sf::Vector2f(0,0),&window);
+            DRAW(&handler,Orientation::Rotate(handler.Player1.getOrientation(),Orientation::Left),0.2,sf::Vector2f(1000,400),&window);
+            DRAW(&handler,Orientation::Rotate(handler.Player1.getOrientation(),Orientation::Right),0.2,sf::Vector2f(1200, 400),&window);
+            DRAW(&handler,Orientation::Rotate(handler.Player1.getOrientation(),Orientation::Up),0.2,sf::Vector2f(1100, 200),&window);
+            DRAW(&handler,Orientation::Rotate(handler.Player1.getOrientation(),Orientation::Down),0.2,sf::Vector2f(1100, 600),&window);
+            
+            position.setPosition(handler.getCentre(handler.Player1,handler.Player1.getOrientation()));
+            
+            window.draw(position);
+            
+            
+            
             window.display();
         }
     }

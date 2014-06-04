@@ -16,6 +16,12 @@
       <itemPath>Obstacle.h</itemPath>
       <itemPath>Orientation.cpp</itemPath>
       <itemPath>Orientation.h</itemPath>
+      <itemPath>Player.cpp</itemPath>
+      <itemPath>Player.h</itemPath>
+      <itemPath>PlayerHandler.cpp</itemPath>
+      <itemPath>PlayerHandler.h</itemPath>
+      <itemPath>Three_Points.cpp</itemPath>
+      <itemPath>Three_Points.h</itemPath>
       <itemPath>Vector.cpp</itemPath>
       <itemPath>Vector.h</itemPath>
       <itemPath>main.cpp</itemPath>
@@ -67,6 +73,18 @@
       </item>
       <item path="Orientation.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="Player.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Player.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="PlayerHandler.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="PlayerHandler.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Three_Points.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Three_Points.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="Vector.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Vector.h" ex="false" tool="3" flavor2="0">
@@ -110,6 +128,18 @@
       <item path="Orientation.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Orientation.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Player.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Player.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="PlayerHandler.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="PlayerHandler.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Three_Points.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Three_Points.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Vector.cpp" ex="false" tool="1" flavor2="0">
       </item>
